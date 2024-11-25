@@ -1,0 +1,63 @@
+<div id="content">halo</div>
+
+<script>
+  const pbo = {
+    model: {
+      mahasiswa: [
+        { username: "hilman", pin: "hilman123" },
+        { username: "deni", pin: "deni123" },
+        { username: "shandy", pin: "sandi123" },
+      ],
+    },
+    services: {
+      getter: function () {
+        alert("getter");
+      },
+      setter: function () {
+        alert("setter");
+      },
+    },
+    view: {
+      signform: function () {
+        return `
+          <div>
+            Username: <input type='text' id='username'><br/>
+            PIN: <input type='password' id='pin'><br/>
+            <button id='login'>Login</button>
+            <button id='cancel'>Cancel</button>
+          </div>
+        `;
+      },
+    },
+    controller: {
+      signform: function () {
+        document.getElementById("content").innerHTML = pbo.view.signform();
+
+        // Tambahkan event handler untuk tombol login
+        document.getElementById("login").onclick = function () {
+          const username = document.getElementById("username").value;
+          const pin = document.getElementById("pin").value;
+
+          const user = pbo.model.mahasiswa.find(
+            (m) => m.username === username && m.pin === pin
+          );
+
+          if (user) {
+            alert(`Login berhasil! Selamat datang, ${username}`);
+          } else {
+            alert("Username atau PIN salah!");
+          }
+        };
+
+        // Tambahkan event handler untuk tombol cancel
+        document.getElementById("cancel").onclick = function () {
+          document.getElementById("username").value = "";
+          document.getElementById("pin").value = "";
+        };
+      },
+    },
+  };
+
+  // Render form login
+  pbo.controller.signform();
+</script>
